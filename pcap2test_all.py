@@ -23,6 +23,7 @@ class Parser:
         self.sizeresult = []
         self.intresult = []
         self.payload_result = b''
+        self.plength_result = []
         self.previous_packet = None
 
     def parse_all_mode(self, file):
@@ -33,6 +34,7 @@ class Parser:
         total_result.append(p)
         total_result.append(self.sizeresult)
         total_result.append(self.intresult)
+        total_result.append(self.plength_result)
         return total_result
     
     def check_ip(self,ip):
@@ -53,6 +55,7 @@ class Parser:
         self.sizeresult = []
         self.intresult = []
         self.payload_result = b''
+        self.plength_result = []
         self.dest_ip =  "0.0.0.0"
         self.previous_packet = None
         
@@ -88,14 +91,18 @@ class Parser:
                     switcher.get('i')(packet)
                 
                 if self.count >= self.packet_num:
-                    if self.mode == 'p':
-
-                        if len(self.payload_result) > self.wanted:
-                            self.payload_result = self.payload_result[0:self.wanted]
-                        else:
-                            self.payload_result = self.payload_result + b'\x00' * (self.wanted - len(self.payload_result))
+                    # if self.mode == 'p':
+                    #     if len(self.payload_result) > self.wanted:
+                    #         self.payload_result = self.payload_result[0:self.wanted]
+                    #     else:
+                    #         self.payload_result = self.payload_result + b'\x00' * (self.wanted - len(self.payload_result))
+                    #     self.result = [i for i in self.payload_result]
+                    if len(self.payload_result) < self.wanted:
+                        pass
+                    else:
+                        self.payload_result = self.payload_result[0:self.wanted]
                         self.result = [i for i in self.payload_result]
-                    return self.result
+                        return self.result
 
 
     def payload(self, packet):
@@ -105,17 +112,26 @@ class Parser:
                 if packet.haslayer(TLSApplicationData):
                     payload = packet[TLSApplicationData].data
                     self.payload_result = self.payload_result + payload
+                    self.plength_result.append(len(payload))
+                else:
+                    self.plength_result.append(0)
 
             # TLS packet
-            if packet.haslayer(SSLv2):
+            elif packet.haslayer(SSLv2):
                 if packet.haslayer(Raw):
                     payload = packet[Raw].load
                     self.payload_result = self.payload_result + payload
+                    self.plength_result.append(len(payload))
+                else:
+                    self.plength_result.append(0)
 
+            else:
+                self.plength_result.append(0)
 
-        if packet[IP].proto == 17: # udp
+        elif packet[IP].proto == 17: # udp
             payload = packet[Raw].load
             self.payload_result = self.payload_result + payload
+            self.plength_result.append(len(payload))
 
     def packet_size(self, packet):
         self.sizeresult.append(len(packet))
@@ -146,6 +162,7 @@ if __name__=="__main__":
         pf= open(cate+"_p.txt","a")
         sf = open(cate+"_s.txt", "a")
         interf = open(cate+"_inter.txt", "a")
+        plf = open(cate+"_pl.txt", "a")
         for file in file_list:
             total+=1
             print(total)
@@ -154,6 +171,8 @@ if __name__=="__main__":
                 pf.write(" ".join(str(int(j)) for j in payload[0])+"\n")
                 sf.write(" ".join(str(int(j)) for j in payload[1])+"\n")
                 interf.write(" ".join(str(int(j*1000000)) for j in payload[2])+"\n")
+                plf.write(" ".join(str(int(j)) for j in payload[3])+"\n")
         pf.close()
         sf.close()
         interf.close()
+        plf.close()
