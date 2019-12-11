@@ -1,0 +1,5 @@
+199.212.24.175,r4---sn-j5o5gpx-t0ae.googlevideo.com
+216.58.219.238,i3.ytimg.com
+63.245.217.113,blocklist.addons.mozilla.org
+173.194.123.127,ssl.gstatic.com
+173.194.123.101,www.youtube.com

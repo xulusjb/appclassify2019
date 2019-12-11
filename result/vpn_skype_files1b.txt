@@ -1,0 +1,15 @@
+23.194.214.46,apps.skypeassets.com
+23.194.214.46,apps.skypeassets.com
+23.194.214.46,apps.skypeassets.com
+91.190.218.34,login.skype.com
+23.194.214.42,secure.skypeassets.com
+23.194.214.46,apps.skypeassets.com
+173.194.113.48,www.google.com
+91.189.92.57,daisy.ubuntu.com
+23.194.214.46,apps.skypeassets.com
+131.253.61.84,login.live.com
+131.253.61.84,login.live.com
+131.253.61.84,login.live.com
+23.54.136.70,auth.gfx.ms
+23.54.136.70,auth.gfx.ms
+23.54.136.70,auth.gfx.ms

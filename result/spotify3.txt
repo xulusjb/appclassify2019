@@ -1,0 +1,5 @@
+216.58.219.227,ssl.gstatic.com
+216.58.219.226,www.googletagservices.com
+216.58.219.226,securepubads.g.doubleclick.net
+173.194.123.96,clients4.google.com
+173.194.123.96,clients4.google.com

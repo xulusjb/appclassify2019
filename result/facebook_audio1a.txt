@@ -1,0 +1,2 @@
+209.148.205.35,fbstatic-a.akamaihd.net
+173.252.100.27,edge-chat.facebook.com

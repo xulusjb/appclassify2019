@@ -1,0 +1,12 @@
+23.235.37.217,player.vimeo.com
+209.148.205.35,pdlvimeocdn-a.akamaihd.net
+23.235.40.143,fresnel.vimeocdn.com
+74.125.226.41,safebrowsing.google.com
+74.125.226.72,safebrowsing-cache.google.com
+74.125.226.63,ssl.gstatic.com
+74.125.226.40,clients4.google.com
+74.125.226.40,clients4.google.com
+23.235.40.143,i.vimeocdn.com
+23.235.40.143,i.vimeocdn.com
+23.235.40.143,i.vimeocdn.com
+104.156.81.217,player.vimeo.com

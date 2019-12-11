@@ -1,0 +1,14 @@
+173.194.123.56,www.google.ca
+173.194.123.56,www.google.ca
+173.194.123.56,www.google.ca
+173.194.123.56,www.google.ca
+173.194.123.56,www.google.ca
+173.194.123.56,www.google.ca
+216.58.219.237,accounts.google.com
+216.58.219.237,accounts.google.com
+74.125.226.168,accounts.youtube.com
+64.233.171.95,www.googleapis.com
+173.194.208.188,mtalk.google.com
+64.233.171.95,www.googleapis.com
+74.125.226.163,clients4.google.com
+64.233.171.95,translate.googleapis.com

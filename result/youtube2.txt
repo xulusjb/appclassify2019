@@ -1,0 +1,10 @@
+216.58.219.238,www.youtube.com
+199.212.24.175,r4---sn-j5o5gpx-t0ae.googlevideo.com
+216.58.219.206,s.youtube.com
+216.58.219.238,www.youtube-nocookie.com
+216.58.219.225,yt3.ggpht.com
+173.194.123.84,www.google.com
+216.58.219.226,googleads.g.doubleclick.net
+216.58.219.225,lh3.googleusercontent.com
+216.58.219.238,i1.ytimg.com
+199.212.24.174,r3---sn-j5o5gpx-t0ae.googlevideo.com

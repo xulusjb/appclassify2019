@@ -1,0 +1,3 @@
+173.252.100.27,6-edge-chat.facebook.com
+173.252.100.27,edge-chat.facebook.com
+173.194.123.110,clients4.google.com

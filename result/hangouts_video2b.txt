@@ -1,0 +1,13 @@
+216.58.221.3,csi.gstatic.com
+216.58.221.3,csi.gstatic.com
+216.58.221.3,csi.gstatic.com
+216.58.219.193,lh4.googleusercontent.com
+173.194.123.97,clients4.google.com
+173.194.123.123,ad.doubleclick.net
+23.195.220.231,javadl-esd-secure.oracle.com
+173.194.123.99,clients4.google.com
+216.58.219.206,safebrowsing.google.com
+173.194.123.72,safebrowsing-cache.google.com
+173.194.123.118,mail.google.com
+65.55.252.43,watson.telemetry.microsoft.com
+173.194.123.96,clients6.google.com

@@ -1,0 +1,4 @@
+184.27.206.8,fpdownload.macromedia.com
+191.232.139.4,settings-win.data.microsoft.com
+191.232.139.4,settings-win.data.microsoft.com
+134.170.58.123,fe2.update.microsoft.com

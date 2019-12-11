@@ -1,0 +1,15 @@
+54.247.90.74,www.meneame.net
+173.194.20.107,r6---sn-aigllnzz.googlevideo.com
+216.58.219.230,ad.doubleclick.net
+173.194.123.109,pagead2.googlesyndication.com
+173.194.123.121,www.googletagservices.com
+64.233.171.95,www.googleapis.com
+199.212.24.175,r4---sn-j5o5gpx-t0ae.googlevideo.com
+216.58.219.226,pubads.g.doubleclick.net
+173.194.123.123,s0.2mdn.net
+199.212.24.173,r2---sn-j5o5gpx-t0ae.googlevideo.com
+216.58.219.237,accounts.google.com
+216.58.219.238,clients4.google.com
+216.58.219.238,clients4.google.com
+216.58.219.238,www.youtube.com
+216.58.219.238,i.ytimg.com

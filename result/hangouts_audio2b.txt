@@ -1,0 +1,12 @@
+173.194.123.117,mail.google.com
+216.58.219.193,oauth.googleusercontent.com
+74.125.136.120,csi.gstatic.com
+74.125.136.120,csi.gstatic.com
+74.125.136.120,csi.gstatic.com
+173.194.123.98,clients4.google.com
+173.194.123.124,ad.doubleclick.net
+173.194.204.189,0.client-channel.google.com
+216.58.219.206,play.google.com
+216.58.219.206,safebrowsing.google.com
+216.58.219.206,play.google.com
+216.58.219.238,clients6.google.com

@@ -1,0 +1,3 @@
+173.252.100.27,4-edge-chat.facebook.com
+173.252.100.27,edge-chat.facebook.com
+209.148.205.26,fbexternal-a.akamaihd.net

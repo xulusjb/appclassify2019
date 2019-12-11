@@ -1,0 +1,6 @@
+23.195.206.176,secure.netflix.com
+23.195.206.176,secure.netflix.com
+173.194.123.119,ssl.gstatic.com
+23.21.194.157,cbp-us.nccp.netflix.com
+54.225.175.202,cbp-us.nccp.netflix.com
+54.225.175.202,cbp-us.nccp.netflix.com

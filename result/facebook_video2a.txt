@@ -1,0 +1,7 @@
+209.148.205.26,fbstatic-a.akamaihd.net
+173.252.100.27,1-edge-chat.facebook.com
+173.252.100.27,edge-chat.facebook.com
+216.58.219.238,safebrowsing.google.com
+216.58.219.227,ssl.gstatic.com
+173.194.123.99,clients4.google.com
+209.148.205.35,fbcdn-creative-a.akamaihd.net

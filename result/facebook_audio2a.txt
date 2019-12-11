@@ -1,0 +1,10 @@
+209.148.205.26,fbstatic-a.akamaihd.net
+173.252.100.27,edge-chat.facebook.com
+209.148.205.35,fbcdn-creative-a.akamaihd.net
+216.58.219.238,clients2.google.com
+209.148.205.16,fbcdn-creative-a.akamaihd.net
+173.194.123.124,ad.doubleclick.net
+54.243.71.182,sp1.convertro.com
+173.194.123.119,ssl.gstatic.com
+173.194.123.101,safebrowsing.google.com
+173.194.123.70,safebrowsing-cache.google.com

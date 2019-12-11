@@ -1,0 +1,11 @@
+216.58.219.238,safebrowsing.google.com
+137.116.33.169,api.asm.skype.com
+137.116.33.169,api.asm.skype.com
+137.116.33.169,api.asm.skype.com
+23.45.38.13,secure.skypeassets.com
+23.45.38.13,secure.skypeassets.com
+23.45.38.13,secure.skypeassets.com
+23.45.38.13,secure.skypeassets.com
+66.235.146.201,smetrics.skype.com
+91.190.218.34,login.skype.com
+91.190.218.34,login.skype.com

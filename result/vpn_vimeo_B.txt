@@ -1,0 +1,9 @@
+104.156.85.217,player.vimeo.com
+209.148.205.41,avvimeo-a.akamaihd.net
+23.235.46.143,fresnel.vimeocdn.com
+209.148.205.35,avvimeo-a.akamaihd.net
+74.125.226.35,safebrowsing.google.com
+74.125.226.69,safebrowsing-cache.google.com
+74.125.226.63,ssl.gstatic.com
+216.58.219.205,accounts.google.com
+74.125.226.37,clients4.google.com

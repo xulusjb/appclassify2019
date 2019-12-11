@@ -1,0 +1,11 @@
+173.194.123.104,clients2.google.com
+216.58.219.237,accounts.google.com
+74.125.226.161,clients4.google.com
+216.58.219.206,clients4.google.com
+65.54.225.168,bay407-m.hotmail.com
+65.54.225.168,bay407-m.hotmail.com
+65.54.225.168,bay407-m.hotmail.com
+173.194.207.95,www.googleapis.com
+74.125.226.164,clients4.google.com
+173.194.123.4,safebrowsing.google.com
+23.195.216.184,apps.skype.com

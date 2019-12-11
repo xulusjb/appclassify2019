@@ -1,0 +1,14 @@
+173.252.100.27,www.facebook.com
+199.212.24.172,r1---sn-j5o5gpx-t0ae.googlevideo.com
+173.194.123.96,s.ytimg.com
+173.194.123.99,www.youtube-nocookie.com
+199.212.24.174,r3---sn-j5o5gpx-t0ae.googlevideo.com
+173.194.123.24,www.google.ca
+89.31.101.136,ace.adoftheyear.com
+89.31.101.136,ace.adoftheyear.com
+216.58.219.238,www.youtube.com
+216.58.219.238,i.ytimg.com
+216.58.219.227,ssl.gstatic.com
+216.58.219.238,i.ytimg.com
+173.194.123.106,yt3.ggpht.com
+173.194.123.127,ssl.gstatic.com

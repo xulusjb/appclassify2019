@@ -1,0 +1,3 @@
+23.67.255.209,fbstatic-a.akamaihd.net
+23.63.99.209,fbstatic-a.akamaihd.net
+23.63.99.232,fbstatic-a.akamaihd.net

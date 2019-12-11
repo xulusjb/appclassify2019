@@ -1,0 +1,16 @@
+54.192.55.68,d3rt1990lpmkn.cloudfront.net
+54.192.55.68,d3rt1990lpmkn.cloudfront.net
+54.192.55.68,d3rt1990lpmkn.cloudfront.net
+54.192.55.68,d3rt1990lpmkn.cloudfront.net
+54.192.55.68,d3rt1990lpmkn.cloudfront.net
+24.156.140.10,fbcdn-profile-a.akamaihd.net
+54.192.55.68,d3rt1990lpmkn.cloudfront.net
+54.230.52.103,datsnxq1rwndn.cloudfront.net
+54.230.52.103,datsnxq1rwndn.cloudfront.net
+173.194.123.122,www.googletagservices.com
+173.194.123.109,securepubads.g.doubleclick.net
+173.194.123.109,securepubads.g.doubleclick.net
+216.58.219.237,accounts.google.com
+173.194.123.100,clients4.google.com
+216.58.219.227,ssl.gstatic.com
+173.194.123.99,clients2.google.com
