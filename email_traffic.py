@@ -1,48 +1,48 @@
 import smtplib
-
+import imaplib
 from string import Template
-
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from tShark import tSharkSniff
 
-MY_ADDRESS = 'my_address@example.comm'
-PASSWORD = 'mypassword'
+class emailClient(object):
+    """docstring for emailClient"""
+    def __init__(self):
+        self.ADDRESS = 'xxx@gmail.com'
+        self.PASSWORD = 'xxxxxxxx'
+        self.host = 'smtp.gmail.com'
+        self.port = 587
 
-def get_contacts(filename):
-    """
-    Return two lists names, emails containing names and email addresses
-    read from a file specified by filename.
-    """
-    
-    names = []
-    emails = []
-    with open(filename, mode='r', encoding='utf-8') as contacts_file:
-        for a_contact in contacts_file:
-            names.append(a_contact.split()[0])
-            emails.append(a_contact.split()[1])
-    return names, emails
+    def get_contacts(self, filename):
+        """
+        Return two lists names, emails containing names and email addresses
+        read from a file specified by filename.
+        """
+        names = []
+        emails = []
+        with open(filename, mode='r', encoding='utf-8') as contacts_file:
+            for a_contact in contacts_file:
+                names.append(a_contact.split()[0])
+                emails.append(a_contact.split()[1])
+        return names, emails
 
-def read_template(filename):
-    """
-    Returns a Template object comprising the contents of the 
-    file specified by filename.
-    """
-    
-    with open(filename, 'r', encoding='utf-8') as template_file:
-        template_file_content = template_file.read()
-    return Template(template_file_content)
+    def read_template(self, filename):
+        """
+        Returns a Template object comprising the contents of the 
+        file specified by filename.
+        """
+        with open(filename, 'r', encoding='utf-8') as template_file:
+            template_file_content = template_file.read()
+        return Template(template_file_content)
 
-def main():
-    names, emails = get_contacts('mycontacts.txt') # read contacts
-    message_template = read_template('message.txt')
+    def send_mail(self, name, email, message_template):
+        # set up the SMTP server
+        s = smtplib.SMTP(host=self.host, port=self.port)
+        s.ehlo()
+        s.starttls()
+        s.ehlo()
+        s.login(self.ADDRESS, self.PASSWORD)
 
-    # set up the SMTP server
-    s = smtplib.SMTP(host='your_host_address_here', port=your_port_here)
-    s.starttls()
-    s.login(MY_ADDRESS, PASSWORD)
-
-    # For each contact, send the email:
-    for name, email in zip(names, emails):
         msg = MIMEMultipart()       # create a message
 
         # add in the actual person name to the message template
@@ -62,9 +62,36 @@ def main():
         # send the message via the server set up earlier.
         s.send_message(msg)
         del msg
+            
+        # Terminate the SMTP session and close the connection
+        s.quit()
+
+    def receive(self):
+        s = imaplib.IMAP4('imap.gmail.com')
+        s.starttls()
+        s.login(self.ADDRESS, self.PASSWORD)
+        s.list()
+        # Out: list of "folders" aka labels in gmail.
+        s.select("inbox") # connect to inbox.
+
+        result, data = mail.search(None, "ALL")
+
+        ids = data[0] # data is a list.
+        id_list = ids.split() # ids is a space separated string
+        latest_email_id = id_list[-1] # get the latest
+
+        result, data = mail.fetch(latest_email_id, "(RFC822)") # fetch the email body (RFC822) for the given ID
+
+        raw_email = data[0][1] # here's the body, which is raw text of the whole email
+        # including headers and alternate payloads
+        return raw_email
         
-    # Terminate the SMTP session and close the connection
-    s.quit()
-    
 if __name__ == '__main__':
-    main()
+    sniff = tSharkSniff()
+    client = emailClient()
+    message_template = client.read_template('message.txt')
+    names, emails = client.get_contacts('mycontacts.txt')
+    for name, email in zip(names, emails):
+        sniff.start(output=output)
+        client.send_mail(name, email, message_template):
+        sniff.stop()

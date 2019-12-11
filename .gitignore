@@ -1,5 +1,6 @@
 pcaps_filtered/
 result/
+*.zip
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -1,30 +1,26 @@
-rom qbittorrent import Client
+from qbittorrent import Client
+from tShark import tSharkSniff
 
-qb = Client('http://127.0.0.1:8080/')
+class bittorrentClient(object):
+    """docstring for bittorrentClient"""
+    def __init__(self):
+        self.USERNAME = 'xxx'
+        self.PASSWORD = 'xxx'
 
-qb.login('admin', 'your-secret-password')
-# not required when 'Bypass from localhost' setting is active.
-# defaults to admin:admin.
-# to use defaults, just do qb.login()
+    def download(self, link):
+        qb = Client('http://127.0.0.1:8080/')
 
-torrents = qb.torrents()
+        qb.login(self.USERNAME, self.PASSWORD)
 
-for torrent in torrents:
-    print torrent['name']
-
-qb.torrents(filter='downloading', category='my category')
-# This will return all torrents which are currently
-# downloading and are labeled as ``my category``.
-
-qb.torrents(filter='paused', sort='ratio')
-# This will return all paused torrents sorted by their Leech:Seed ratio.
+        result = qb.download_from_link(link)
+        return result
 
 
-magnet_link = "magnet:?xt=urn:btih:e334ab9ddd91c10938a7....."
-qb.download_from_link(magnet_link)
-
-# No matter the link is correct or not,
-# method will always return empty JSON object.
-
-link_list = [link1, link2, link3]
-qb.download_from_link(link_list)
+if __name__ == '__main__':
+    sniff = tSharkSniff()
+    client = bittorrentClient()
+    linkes = []
+    for link in links:
+        sniff.start(output=output)
+        client.download(link):
+        sniff.stop()
