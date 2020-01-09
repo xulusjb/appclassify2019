@@ -150,9 +150,9 @@ if __name__=="__main__":
     load_layer("tls")
     parser = Parser()
     #parser.parse('so_1572536834.pcap', 'p')
-    http2_category = ['a','f','i','r','s','so','t','w']
+    #http2_category = ['a','f','i','r','s','so','t','w']
     #http2_category = ['a', 'f', 'i', 'r']
-    #http2_category = ['so','s','t','w']
+    http2_category = ['so','s','t','w']
     http3_category = ['g','gc','gd','gdr','gf','tb','tr','y']
     total = 0
     for cate in http2_category:
