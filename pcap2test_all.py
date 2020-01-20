@@ -1,5 +1,6 @@
 from scapy.all import *
 from os import listdir
+from scapy.utils import hexdump
 import time
 import re 
 class Parser:
@@ -20,21 +21,24 @@ class Parser:
         self.ip_founded = False
         self.count = 0
         self.result = []
+        self.result_pi = []
         self.sizeresult = []
         self.intresult = []
         self.payload_result = b''
+        self.payload_inter_result = b''
         self.plength_result = []
         self.previous_packet = None
 
     def parse_all_mode(self, file):
         total_result = []
-        p = self.parse(file,mode = 'p')
+        p, pi = self.parse(file,mode = 'p')
         if not p:  # this data piece can not form data
         	return None
         total_result.append(p)
         total_result.append(self.sizeresult)
         total_result.append(self.intresult)
         total_result.append(self.plength_result)
+        total_result.append(pi)
         return total_result
     
     def check_ip(self,ip):
@@ -52,12 +56,15 @@ class Parser:
         self.count = 0
         self.ip_founded = False
         self.result = []
+        self.result_pi = []
         self.sizeresult = []
         self.intresult = []
         self.payload_result = b''
+        self.payload_inter_result = b''
         self.plength_result = []
         self.dest_ip =  "0.0.0.0"
         self.previous_packet = None
+        self.previous_packet_pi = None
         
         scapy_cap = rdpcap(file)
         category = (file.split("/")[-1]).split("_")[0]
@@ -72,6 +79,7 @@ class Parser:
                         break
                 
                 self.ip_founded = True
+                #print("IP address is founded in packet number: ", i)
                 
 
             if self.ip_founded and packet.haslayer(IP):
@@ -85,11 +93,12 @@ class Parser:
                             'i': self.packet_interval
                             # TODO: More mode and corresponding functions
                             }
-
+                    #print("packet num:", i)
                     switcher.get('p')(packet)
                     switcher.get('s')(packet)
                     switcher.get('i')(packet)
-                
+                    #print("bbb")
+                    
                 if self.count >= self.packet_num:
                     # if self.mode == 'p':
                     #     if len(self.payload_result) > self.wanted:
@@ -100,18 +109,41 @@ class Parser:
                     if len(self.payload_result) < self.wanted:
                         pass
                     else:
-                        self.payload_result = self.payload_result[0:self.wanted]
-                        self.result = [i for i in self.payload_result]
-                        return self.result
+                        self.payload_result = self.payload_result[0:self.wanted]  #this is the 8000 length payload
+                        self.payload_inter_result = self.payload_inter_result[0:self.wanted]
+                        #print("self.payload_result", self.payload_result)
+                        self.result = [i for i in self.payload_result]  # payload result
+                        self.result_pi = [i for i in self.payload_inter_result]  # payload + interval result
+                        #print("self.result:", self.result)
+                        return self.result, self.result_pi
+        return None, None
 
 
-    def payload(self, packet):
+    def payload(self, packet):  # computer interval first for making p+i data, then store p and p+i data individually. i is for 4 bytes: '01122334'
+        interval = []
+        if self.previous_packet_pi is None:
+            self.previous_packet_pi = packet
+        else:
+            delta = int(float(packet.time - self.previous_packet_pi.time) * 1000000)
+            interval = [delta // 1000000, (delta // 10000)%100, (delta // 100) %100, delta % 100]  # interval = [12,34,56,78]
+            self.previous_packet_pi = packet
+
+        
         if packet[IP].proto == 6: # tcp
+            #print("packet haslayer(TLS): ", ( "True" if packet.haslayer(TLS) else "False"))
+            #print("packet.haslayer(SSLv2): ", ( "True" if packet.haslayer(SSLv2) else "False"))
             # TCP packet
             if packet.haslayer(TLS):
                 if packet.haslayer(TLSApplicationData):
                     payload = packet[TLSApplicationData].data
-                    self.payload_result = self.payload_result + payload
+                    self.payload_result = self.payload_result + payload # modified for packet-end-signal, 3 different places in the code.
+                    if self.payload_inter_result != b'':
+                        self.payload_inter_result = self.payload_inter_result + bytes(interval)  # directly add interval here
+                    self.payload_inter_result = self.payload_inter_result + payload
+                    #print("payload length: ", len(payload))
+                    #print("payload decoding: ", hexdump(payload))
+                    #print("data recorded!---------------------------------------")
+                    #time.sleep(10)
                     self.plength_result.append(len(payload))
                 else:
                     self.plength_result.append(0)
@@ -120,17 +152,37 @@ class Parser:
             elif packet.haslayer(SSLv2):
                 if packet.haslayer(Raw):
                     payload = packet[Raw].load
+                    #print("payload2:", payload)
+                    #print("payload length: ", len(payload))
+                    #print("payload decoding: ", hexdump(payload))
+                    #print("payload type:", type(payload))
+                    #print("payload len:", len(payload))
+                    #print("payload 0 :", payload[0])
+                    #print("int payload 0:", int(payload[0]))
+                    #print("before r1:", self.payload_result)
+                    #print("before r2:", self.payload_inter_result)
                     self.payload_result = self.payload_result + payload
+                    #print("inserted interval: ", interval)
+                    if self.payload_inter_result != b'':
+                        self.payload_inter_result = self.payload_inter_result + bytes(interval)  # directly add interval here
+                    self.payload_inter_result = self.payload_inter_result + payload
+                    #print("r1:", self.payload_result)
+                    #print("r2:", self.payload_inter_result)
                     self.plength_result.append(len(payload))
+                    #print("data recorded!-------------------------------------------------------")
+                    #time.sleep(5)
                 else:
                     self.plength_result.append(0)
-
-            else:
+            else:	
                 self.plength_result.append(0)
 
         elif packet[IP].proto == 17: # udp
             payload = packet[Raw].load
             self.payload_result = self.payload_result + payload
+            if self.payload_inter_result != b'':
+                self.payload_inter_result = self.payload_inter_result + bytes(interval)  # directly add interval here
+            self.payload_inter_result = self.payload_inter_result + payload
+            #print("data recorded!--------------------------------------------------------------")
             self.plength_result.append(len(payload))
 
     def packet_size(self, packet):
@@ -151,9 +203,9 @@ if __name__=="__main__":
     parser = Parser()
     #parser.parse('so_1572536834.pcap', 'p')
     #http2_category = ['a','f','i','r','s','so','t','w']
-    #http2_category = ['a', 'f', 'i', 'r']
-    http2_category = ['so','s','t','w']
-    http3_category = ['g','gc','gd','gdr','gf','tb','tr','y']
+    http2_category = ['a', 'f', 'i', 'r']
+    #http2_category = ['s','so','t','w']
+    #http3_category = ['g','gc','gd','gdr','gf','tb','tr','y']
     total = 0
     for cate in http2_category:
         print(cate)
@@ -163,16 +215,20 @@ if __name__=="__main__":
         sf = open(cate+"_s.txt", "a")
         interf = open(cate+"_inter.txt", "a")
         plf = open(cate+"_pl.txt", "a")
+        pif = open(cate+"_pi.txt","a")
         for file in file_list:
             total+=1
             print(total)
+            #print("./"+cate+"/"+file)
             payload = parser.parse_all_mode("./"+cate+"/"+file)
             if payload:
-                pf.write(" ".join(str(int(j)) for j in payload[0])+"\n")
-                sf.write(" ".join(str(int(j)) for j in payload[1])+"\n")
-                interf.write(" ".join(str(int(j*1000000)) for j in payload[2])+"\n")
-                plf.write(" ".join(str(int(j)) for j in payload[3])+"\n")
+                pf.write(" ".join(str(int(j)) for j in payload[0])+"\n")  #payload
+                sf.write(" ".join(str(int(j)) for j in payload[1])+"\n")  #size (length of packet) (for all the packets between the ip of sender and receiver)
+                interf.write(" ".join(str(int(j*1000000)) for j in payload[2])+"\n")  #inter
+                plf.write(" ".join(str(int(j)) for j in payload[3])+"\n") #packet length (length of payload)
+                pif.write(" ".join(str(int(j)) for j in payload[4])+"\n")  #payload
         pf.close()
         sf.close()
         interf.close()
         plf.close()
+        pif.close()
