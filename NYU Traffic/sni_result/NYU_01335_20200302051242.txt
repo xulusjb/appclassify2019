@@ -1,0 +1,17 @@
+31.13.71.7,scontent.xx.fbcdn.net
+31.13.71.36,www.facebook.com
+13.73.26.107,v10.events.data.microsoft.com
+35.186.224.53,spclient.wg.spotify.com
+172.253.63.108,imap.gmail.com
+128.116.112.44,users.roblox.com
+34.234.229.47,datarouter.ol.epicgames.com
+52.87.63.98,prd-collector-anon.playbuzz.com
+52.179.129.229,arc.msn.com
+172.217.9.234,home-devices.googleapis.com
+23.78.208.56,bag.itunes.apple.com
+17.171.98.3,iphonesubmissions.apple.com
+128.116.112.44,users.roblox.com
+13.73.26.107,v20.events.data.microsoft.com
+40.119.2.214,settings-win.data.microsoft.com
+128.116.112.44,users.roblox.com
+52.179.129.229,arc.msn.com

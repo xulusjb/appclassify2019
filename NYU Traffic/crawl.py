@@ -7,7 +7,7 @@ import sys
 
 class tSharkSniff(object):
     """docstring for tSharkSniff"""
-    def __init__(self, interface='wlo1', files=100):
+    def __init__(self, interface='enp2s0', files=100):
         self.interface = interface
         self.files = files
 
@@ -15,12 +15,12 @@ class tSharkSniff(object):
         command = ['dumpcap', \
             # '-P', \
             # Stops after
-            '-a', 'files:'+str(files), \
+            '-a', 'files:'+str(self.files), \
             # '-a', 'duration:3600', \
             # '-a', 'packets:10000'
 
             # Dump to multiple files, switch to the next file after 'filesize' (kb) or 'duration' seconds
-            '-b', 'filesize:204800', \
+            '-b', 'filesize:1024000', \
             # '-b', 'duration:60', \
 
             # Buffer Size (MB) x 12
@@ -51,13 +51,13 @@ class tSharkSniff(object):
         # subprocess.check_output(shlex.split(command))
 
 def main():
-    sniff = tSharkSniff(interface='wlo1', files=100)
+    sniff = tSharkSniff(interface='enp2s0', files=10000)
     try:
         os.mkdir('./result')
     except Exception as e:
         pass
 
-    sniff.start(utput='./result/NYU')
+    sniff.start(output='./result/NYU')
 
     try:
         while sniff.check() == None:

@@ -1,0 +1,17 @@
+13.226.36.226,d3cv4a9a9wh0bt.cloudfront.net
+52.179.129.229,arc.msn.com
+52.25.154.57,ece4.playfabapi.com
+128.116.112.44,users.roblox.com
+52.114.88.22,browser.pipe.aria.microsoft.com
+23.78.209.199,gspe35-ssl.ls.apple.com
+52.114.128.10,v10.events.data.microsoft.com
+172.217.10.234,safebrowsing.googleapis.com
+69.192.108.239,api1.origin.com
+23.20.28.69,ss-prod-ue1-notif-32.aws.adobess.com
+128.116.112.44,users.roblox.com
+13.226.36.20,d3cv4a9a9wh0bt.cloudfront.net
+52.179.129.229,arc.msn.com
+13.226.36.61,d3cv4a9a9wh0bt.cloudfront.net
+128.116.112.44,users.roblox.com
+35.186.224.53,spclient.wg.spotify.com
+31.13.65.36,www.facebook.com

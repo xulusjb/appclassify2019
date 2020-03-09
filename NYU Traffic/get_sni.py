@@ -5,15 +5,14 @@ from subprocess import check_output
 
 def main():
     flag = False
-    filelist = ['facebook', 'email', 'youtube', 'hangout', 'gmail', 'icq', 'netflix', 'skype', 'spotify', 'vimeo', 'voipbuster']
     try:
-        os.mkdir("./result/")
+        os.mkdir("./sni_result/")
     except Exception as e:
         pass
 
     for filename in os.listdir('./pcaps'):
         try:
-            with open('./result/'+filename.split('.')[0]+'.txt') as f:
+            with open('./sni_result/'+filename.split('.')[0]+'.txt') as f:
                 print(u'>> skipping '+filename.split('.')[0]+'.txt')
                 flag = False
                 continue
@@ -30,7 +29,7 @@ def main():
         print(ret)
         print()
 
-        with open('./result/'+filename.split('.')[0]+'.txt', 'a') as output:
+        with open('./sni_result/'+filename.split('.')[0]+'.txt', 'a') as output:
             output.write(ret.decode("utf-8") )
 
 if __name__ == '__main__':
