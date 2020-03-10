@@ -16,6 +16,7 @@ for item in sni_file:
 
 domain_sni = {
         'gmail': [],
+        'facebook': [],
         'msn': [],
         'roblox': [],
         'riot': [],
@@ -46,7 +47,7 @@ domain_sni = {
 with open('sni_hottest', 'r') as f:
     sni_list = f.read().strip().split('\n')
 
-domains = ['gmail', 'msn', 'roblox', 'riot', 'epic', 'cloudfront', 'microsoft', 'nyu', 
+domains = ['gmail', 'facebook', 'msn', 'roblox', 'riot', 'epic', 'cloudfront', 'microsoft', 'nyu', 
             'bilibili', 'spotify', 'steam', 'google', 'icloud', 'discord', 'origin', 'netflix', 
             'apple', 'battle', 'skype', 'nvidia', 'twitter', 'xbox', 'leagueoflegends', 'adobe', 'qq', 'slack']
 
@@ -58,4 +59,4 @@ for row in sni_list:
             domain_sni[domain].append({sni: sni_ip[sni]})
 print(json.dumps(domain_sni))
 with open('domain_sni.json', 'w') as f:
-    f.write(json.dumps(domain_sni))
+    json.dump(domain_sni, f)
