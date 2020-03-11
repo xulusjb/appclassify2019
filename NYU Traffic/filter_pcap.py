@@ -28,20 +28,31 @@ class Filter(object):
             pass
 
         for filename in os.listdir(path):
+            filename = 'NYU_00001_20200228183947'
+            self.filename = filename
 
             print('Processing '+filename+' ...')
             # packets = rdpcap(path+filename)
             pcap_reader = PcapReader(path+filename)
+            self.count = 0
             self.filtered = {}
             for packet in pcap_reader:
+                self.count += 1
                 if packet.haslayer(IP):
-                    if ((packet[IP].src in self.dest_ip) or (packet[IP].dst in self.dest_ip)):
+                    if ((packet[IP].src in self.inverted_ips) or (packet[IP].dst in self.inverted_ips)):
                         if packet[IP].proto == 6:
                             self.check_packet(packet, 'TCP')
                         elif packet[IP].proto == 17:
                             self.check_packet(packet, 'UDP')
 
+                if self.count % 10000 == 0:
+                    print('Processed', self.count, 'packets.')
+
+            for info in self.filtered:
+                self.save_pcap(info)
+
             pcap_reader.close()
+            sys.exit()
 
     def check_packet(self, packet, proto):
         info = (packet[IP].src, packet[IP].dst, packet[proto].sport, packet[proto].dport)
@@ -62,56 +73,72 @@ class Filter(object):
             is_candidate = True
 
         if is_candidate:
+            is_tcp_syn = False
+            if proto == 'TCP':
+                is_tcp_syn = self.check_tcp_syn(packet)
+
             if not info in self.filtered and not info_reverse in self.filtered:
-                if self.check_client_hello(packet):
+                if is_tcp_syn:
                     self.new_session(info, app, packet)
 
-            elif info in self.result:
-                if self.check_client_hello(packet):
+            elif info in self.filtered:
+                if is_tcp_syn:
                     self.save_pcap(info)
                     self.new_session(info, app, packet)
                 else:
                     self.filtered[info]['packets'].append(packet)
 
-            elif info_reverse in self.result:
-                if self.check_client_hello(packet):
+            elif info_reverse in self.filtered:
+                if is_tcp_syn:
                     self.save_pcap(info_reverse)
                     self.new_session(info_reverse, app, packet)
                 else:
                     self.filtered[info_reverse]['packets'].append(packet)
 
-    def check_client_hello(self, packet, info):
-        is_client_hello = False
-        if packet.haslayer(TLS):
-            print(packet)
-            is_client_hello = 
+    def check_tcp_syn(self, packet):
+        is_tcp_syn = False
+        if packet[TCP].flags == 'S':
+            is_tcp_syn = True
 
-        sys.exit()
-        return is_client_hello
+        return is_tcp_syn
 
     def new_session(self, info, app, packet):
+        # print('New session: '+app)
+        # print(info)
+        # print()
         self.filtered[info] = {}
         self.filtered[info]['app'] = app
+        self.filtered[info]['count'] = self.count
 
         self.filtered[info]['packets'] = []
         self.filtered[info]['packets'].append(packet)
 
 
-    def.save_pcap(self, info):
+    def save_pcap(self, info):
         app = self.filtered[info]['app']
         packets = self.filtered[info]['packets']
+        count= self.filtered[info]['count']
 
         path = './pcaps_filtered/'+app+'/'
+        print('Save to '+path)
         try:
             os.mkdir(path)
         except Exception as e:
             pass
 
-        wrpcap(path+str(int(time.time()))+'.pcap', packets)
+        wrpcap(path+self.filename+'_'+str(count)+'.pcap', packets)
 
 if __name__ == '__main__':
     load_layer("tls")
     f = Filter()
     f.read_sni('./domain_sni.json')
-    print(f.inverted_ips.keys())
-    f.filter('./pcaps')
+    # print(f.inverted_ips.keys())
+
+    # for filename in os.listdir('./pcaps/'):
+    #     pcap_reader = PcapReader('./pcaps/'+filename)
+    #     for packet in pcap_reader:
+    #         if packet.haslayer(TLS):
+    #             if packet[TLS].type == 20:
+    #                 packet.show()
+
+    f.filter('./pcaps/')
