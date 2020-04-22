@@ -175,12 +175,12 @@ class Parser:
             self.previous_packet = packet
 
 def open_files():
-    pf= open('./result/'+cate+"_p.txt","a")
-    sf = open('./result/'+cate+"_s.txt", "a")
-    interf = open('./result/'+cate+"_inter.txt", "a")
-    plf = open('./result/'+cate+"_pl.txt", "a")
-    pif = open('./result/'+cate+"_pi.txt", "a")
-    pxf = open('./result/'+cate+"_px.txt", "a")
+    pf= open('./data/'+cate+"_p.txt","a")
+    sf = open('./data/'+cate+"_s.txt", "a")
+    interf = open('./data/'+cate+"_inter.txt", "a")
+    plf = open('./data/'+cate+"_pl.txt", "a")
+    pif = open('./data/'+cate+"_pi.txt", "a")
+    pxf = open('./data/'+cate+"_px.txt", "a")
 
     return pf, sf, interf, plf, pif, pxf
 
@@ -207,7 +207,7 @@ if __name__=="__main__":
     print(NYU_category)
 
     finished_category = []
-    for file in os.listdir('./result'):
+    for file in os.listdir('./data'):
         cate = file.split('_')[0]
         if cate not in finished_category:
             finished_category.append(cate)
@@ -224,7 +224,7 @@ if __name__=="__main__":
         total = 0
         file_list = os.listdir('./march_data/' + cate)
         try:
-            os.mkdir('./result/')
+            os.mkdir('./data/')
         except Exception as e:
             pass
 
