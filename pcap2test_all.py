@@ -22,10 +22,12 @@ class Parser:
         self.count = 0
         self.result = []
         self.result_pi = []
+        self.result_px = []
         self.sizeresult = []
         self.intresult = []
         self.payload_result = b''
         self.payload_inter_result = b''
+        self.payload_FFFFFF_result = b''
         self.plength_result = []
         self.previous_packet = None
 
@@ -57,10 +59,12 @@ class Parser:
         self.ip_founded = False
         self.result = []
         self.result_pi = []
+        self.result_px = []
         self.sizeresult = []
         self.intresult = []
         self.payload_result = b''
         self.payload_inter_result = b''
+        self.payload_FFFFFF_result = b''
         self.plength_result = []
         self.dest_ip =  "0.0.0.0"
         self.previous_packet = None
@@ -91,32 +95,28 @@ class Parser:
                             'p': self.payload,
                             's': self.packet_size,
                             'i': self.packet_interval
-                            # TODO: More mode and corresponding functions
                             }
                     #print("packet num:", i)
                     switcher.get('p')(packet)
                     switcher.get('s')(packet)
                     switcher.get('i')(packet)
-                    #print("bbb")
                     
                 if self.count >= self.packet_num:
-                    # if self.mode == 'p':
-                    #     if len(self.payload_result) > self.wanted:
-                    #         self.payload_result = self.payload_result[0:self.wanted]
-                    #     else:
-                    #         self.payload_result = self.payload_result + b'\x00' * (self.wanted - len(self.payload_result))
-                    #     self.result = [i for i in self.payload_result]
                     if len(self.payload_result) < self.wanted:
                         pass
                     else:
                         self.payload_result = self.payload_result[0:self.wanted]  #this is the 8000 length payload
                         self.payload_inter_result = self.payload_inter_result[0:self.wanted]
+                        self.payload_FFFFFF_result = self.payload_FFFFFF_result[0:self.wanted]
                         #print("self.payload_result", self.payload_result)
-                        self.result = [i for i in self.payload_result]  # payload result
-                        self.result_pi = [i for i in self.payload_inter_result]  # payload + interval result
-                        #print("self.result:", self.result)
-                        return self.result, self.result_pi
-        return None, None
+                        
+                    self.result = [i for i in self.payload_result]  # payload result
+                    self.result_pi = [i for i in self.payload_inter_result]  # payload + interval result
+                    self.result_px = [i for i in self.payload_FFFFFF_result]  # payload + interval result
+                    #print("self.result:", self.result)
+                    return self.result, self.result_pi, self.result_px
+
+        return None, None, None
 
 
     def payload(self, packet):  # computer interval first for making p+i data, then store p and p+i data individually. i is for 4 bytes: '01122334'
@@ -140,6 +140,9 @@ class Parser:
                     if self.payload_inter_result != b'':
                         self.payload_inter_result = self.payload_inter_result + bytes(interval)  # directly add interval here
                     self.payload_inter_result = self.payload_inter_result + payload
+                    if self.payload_FFFFFF_result != b'':
+                        self.payload_FFFFFF_result = self.payload_FFFFFF_result + b'\xff' * 6 # directly add interval here
+                    self.payload_FFFFFF_result = self.payload_FFFFFF_result + payload
                     #print("payload length: ", len(payload))
                     #print("payload decoding: ", hexdump(payload))
                     #print("data recorded!---------------------------------------")
@@ -166,6 +169,9 @@ class Parser:
                     if self.payload_inter_result != b'':
                         self.payload_inter_result = self.payload_inter_result + bytes(interval)  # directly add interval here
                     self.payload_inter_result = self.payload_inter_result + payload
+                    if self.payload_FFFFFF_result != b'':
+                        self.payload_FFFFFF_result = self.payload_FFFFFF_result + b'\xff' * 6 # directly add interval here
+                    self.payload_FFFFFF_result = self.payload_FFFFFF_result + payload
                     #print("r1:", self.payload_result)
                     #print("r2:", self.payload_inter_result)
                     self.plength_result.append(len(payload))
@@ -182,6 +188,10 @@ class Parser:
             if self.payload_inter_result != b'':
                 self.payload_inter_result = self.payload_inter_result + bytes(interval)  # directly add interval here
             self.payload_inter_result = self.payload_inter_result + payload
+
+            if self.payload_FFFFFF_result != b'':
+                self.payload_FFFFFF_result = self.payload_FFFFFF_result + b'\xff' * 6 # directly add interval here
+            self.payload_FFFFFF_result = self.payload_FFFFFF_result + payload
             #print("data recorded!--------------------------------------------------------------")
             self.plength_result.append(len(payload))
 
@@ -201,9 +211,8 @@ class Parser:
 if __name__=="__main__":
     load_layer("tls")
     parser = Parser()
-    #parser.parse('so_1572536834.pcap', 'p')
-    #http2_category = ['a','f','i','r','s','so','t','w']
-    http2_category = ['a', 'f', 'i', 'r']
+    http2_category = ['a','f','i','r','s','so','t','w']
+    # http2_category = ['a', 'f', 'i', 'r']
     #http2_category = ['s','so','t','w']
     #http3_category = ['g','gc','gd','gdr','gf','tb','tr','y']
     total = 0
@@ -216,6 +225,8 @@ if __name__=="__main__":
         interf = open(cate+"_inter.txt", "a")
         plf = open(cate+"_pl.txt", "a")
         pif = open(cate+"_pi.txt","a")
+        pxf = open(cate+"_px.txt", "a")
+
         for file in file_list:
             total+=1
             print(total)
@@ -227,8 +238,11 @@ if __name__=="__main__":
                 interf.write(" ".join(str(int(j*1000000)) for j in payload[2])+"\n")  #inter
                 plf.write(" ".join(str(int(j)) for j in payload[3])+"\n") #packet length (length of payload)
                 pif.write(" ".join(str(int(j)) for j in payload[4])+"\n")  #payload
+                pxf.write(" ".join(str(int(j)) for j in payload[5])+"\n")  #payload
+        
         pf.close()
         sf.close()
         interf.close()
         plf.close()
         pif.close()
+        pxf.close()
