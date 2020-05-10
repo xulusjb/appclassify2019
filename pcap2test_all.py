@@ -234,11 +234,11 @@ if __name__=="__main__":
             payload = parser.parse_all_mode("./"+cate+"/"+file)
             if payload:
                 pf.write(" ".join(str(int(j)) for j in payload[0])+"\n")  #payload
-                sf.write(" ".join(str(int(j)) for j in payload[1])+"\n")  #size (length of packet) (for all the packets between the ip of sender and receiver)
-                interf.write(" ".join(str(int(j*1000000)) for j in payload[2])+"\n")  #inter
+                sf.write(" ".join(str(int(j)) for j in payload[1])+"\n")  #size (length of packet, not payload) (for all the packets between the ip of sender and receiver)
+                interf.write(" ".join(str(int(j*1000000)) for j in payload[2])+"\n")  #interval time
                 plf.write(" ".join(str(int(j)) for j in payload[3])+"\n") #packet length (length of payload)
-                pif.write(" ".join(str(int(j)) for j in payload[4])+"\n")  #payload
-                pxf.write(" ".join(str(int(j)) for j in payload[5])+"\n")  #payload
+                pif.write(" ".join(str(int(j)) for j in payload[4])+"\n")  #payload + interval time
+                pxf.write(" ".join(str(int(j)) for j in payload[5])+"\n")  #payload + FFFFFF
         
         pf.close()
         sf.close()
