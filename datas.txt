@@ -1,0 +1,6 @@
+The data we have:
+nyu_crawl_25apps
+
+Aws http2 apps for 2 locations
+
+Aws http3 apps for 2 locations
