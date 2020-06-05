@@ -39,7 +39,7 @@ import tensorflow as tf
 tf.__version__
 
 
-def read_data(path, num=200, mode='px', max_length = 3000, ratio = 0.8):  # num: sample number , ratio : train data / all
+def read_data(path, num=40, mode='px', max_length = 3000, ratio = 0.8):  # num: sample number , ratio : train data / all
     train_dict = {}
     test_dict = {}
     categories = []
