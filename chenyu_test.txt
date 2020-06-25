@@ -1,0 +1,6 @@
+1. Please download the script and data here:
+https://drive.google.com/file/d/19TCa_xG9vn-m6l4ePgBZhnLM2QrgkmWd/view?usp=sharing
+
+2. Unzip the file and run "python s_cnn_nyu.py" to run the script
+
+3. Please copy output in the console to me.
